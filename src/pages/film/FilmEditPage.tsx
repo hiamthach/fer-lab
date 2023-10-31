@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 import FilmForm from '@/components/feature/film/FilmForm';
 import filmApi from '@/config/api/filmApi';
+import toastHelper from '@/config/helpers/toast.helper';
 import { Film } from '@/config/types/film.type';
 import { withAuth } from '@/hocs/withAuth';
 import usePageTitle from '@/hooks/usePageTitle';
@@ -49,8 +50,9 @@ const FilmEditPage = withAuth(() => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedFilm, setSelectedFilm] = useState<Film | null>(null);
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, refetch } = useQuery({
     queryKey: ['films'],
     queryFn: async () => {
       const res = await filmApi.getFilms();
@@ -69,6 +71,13 @@ const FilmEditPage = withAuth(() => {
 
   const handleClose = () => {
     setIsModalOpen(false);
+    setSelectedFilm(null);
+  };
+
+  const handleDeleteFilm = async (id: string) => {
+    await filmApi.deleteFilm(id);
+    toastHelper.success('Film deleted!');
+    refetch();
   };
 
   return (
@@ -120,10 +129,21 @@ const FilmEditPage = withAuth(() => {
                                   <VisibilityIcon className="text-yellow-400 text-sm" />
                                 </IconButton>
                               </Link>
-                              <IconButton size="small">
+                              <IconButton
+                                size="small"
+                                onClick={() => {
+                                  setSelectedFilm(row);
+                                  setIsModalOpen(true);
+                                }}
+                              >
                                 <EditIcon className="text-cyan-400 text-sm" />
                               </IconButton>
-                              <IconButton size="small">
+                              <IconButton
+                                size="small"
+                                onClick={() => {
+                                  handleDeleteFilm(row.id);
+                                }}
+                              >
                                 <DeleteIcon className="text-primary text-sm" />
                               </IconButton>
                             </div>
@@ -166,7 +186,12 @@ const FilmEditPage = withAuth(() => {
             </div>
 
             <div className="w-[560px] mt-2">
-              <FilmForm />
+              <FilmForm
+                refetch={refetch}
+                handleClose={handleClose}
+                isEdit={selectedFilm != null}
+                defaultValue={selectedFilm || undefined}
+              />
             </div>
           </div>
         </Fade>

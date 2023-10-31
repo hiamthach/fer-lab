@@ -1,24 +1,46 @@
-import { FilmFormType, filmFormSchema } from '@/config/types/film.type';
-import { Button, TextField } from '@mui/material';
+import filmApi from '@/config/api/filmApi';
+import toastHelper from '@/config/helpers/toast.helper';
+import { Film, FilmFormType, filmFormSchema } from '@/config/types/film.type';
+import { Button, CircularProgress, TextField } from '@mui/material';
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
 
-const FilmForm = () => {
+interface Props {
+  refetch: () => void;
+  handleClose: () => void;
+  isEdit: boolean;
+  defaultValue?: Film;
+}
+
+const FilmForm = ({ refetch, handleClose, isEdit, defaultValue }: Props) => {
   const initialValues: FilmFormType = {
-    title: '',
-    description: '',
-    image: '',
-    year: 0,
-    nation: '',
-    youtubeUrl: '',
+    title: defaultValue?.title || '',
+    description: defaultValue?.description || '',
+    image: defaultValue?.image || '',
+    year: defaultValue?.year || 0,
+    nation: defaultValue?.nation || '',
+    youtubeUrl: defaultValue?.youtubeUrl || '',
   };
 
-  const handleSubmit = (values: FilmFormType, actions: FormikHelpers<FilmFormType>) => {
-    // Handle form submission here
-    console.log(values);
-
-    // Reset form
-    actions.resetForm();
-    actions.setSubmitting(false);
+  const handleSubmit = async (values: FilmFormType, actions: FormikHelpers<FilmFormType>) => {
+    // Call API
+    try {
+      if (isEdit) {
+        await filmApi.updateFilm(defaultValue?.id as string, values);
+      } else {
+        await filmApi.createFilm(values);
+      }
+      toastHelper.success('Create film successfully!');
+      // Close modal
+      handleClose();
+      refetch();
+      // Reset form
+      actions.resetForm();
+      actions.setSubmitting(false);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      toastHelper.error(error.message);
+      actions.setSubmitting(false);
+    }
   };
 
   return (
@@ -51,7 +73,7 @@ const FilmForm = () => {
           </div>
 
           <Button type="submit" variant="contained" color="primary" disabled={isSubmitting}>
-            Submit
+            {isSubmitting ? <CircularProgress size={24} /> : 'Submit'}
           </Button>
         </Form>
       )}
