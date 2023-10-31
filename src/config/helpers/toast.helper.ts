@@ -1,7 +1,7 @@
 import { ToasterProps, toast } from 'react-hot-toast';
 
 export const TOAST_DEFAULT_OPTIONS: ToasterProps = {
-  position: 'top-right',
+  position: 'top-center',
   reverseOrder: false,
 };
 

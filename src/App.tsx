@@ -1,5 +1,7 @@
 import { Route, RouteProps, Routes } from 'react-router-dom';
 
+import { AuthProvider } from './hooks/useAuth';
+
 import MainLayout from '@/components/layout/MainLayout';
 import CustomRouter from '@/config/routes/CustomRouter';
 import history from '@/config/routes/history';
@@ -12,11 +14,13 @@ function App() {
 
   return (
     <CustomRouter history={history}>
-      <Routes>
-        <Route path="/" element={<MainLayout />}>
-          {renderRouter(publicRoutes)}
-        </Route>
-      </Routes>
+      <AuthProvider>
+        <Routes>
+          <Route path="/" element={<MainLayout />}>
+            {renderRouter(publicRoutes)}
+          </Route>
+        </Routes>
+      </AuthProvider>
     </CustomRouter>
   );
 }
