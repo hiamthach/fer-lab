@@ -5,6 +5,8 @@ import CustomRouter from '@/config/routes/CustomRouter';
 import history from '@/config/routes/history';
 import publicRoutes from '@/config/routes/publicRoutes';
 
+import store from '@/store';
+
 function App() {
   const renderRouter = (routes: RouteProps[]) => {
     return routes.map((route, index) => <Route path={route.path} element={route.element} key={index} />);

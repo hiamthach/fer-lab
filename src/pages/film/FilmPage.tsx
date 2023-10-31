@@ -21,7 +21,7 @@ const FilmPage = () => {
   };
 
   return (
-    <div>
+    <>
       <div className="w-full grid grid-cols-3 py-4 gap-8">
         {filmData.map((film) => {
           return (
@@ -65,7 +65,7 @@ const FilmPage = () => {
           </Fade>
         </Modal>
       )}
-    </div>
+    </>
   );
 };
 
