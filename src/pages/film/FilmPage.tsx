@@ -1,9 +1,10 @@
+import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import FilmCard from '@/components/feature/film/FilmCard';
+import filmApi from '@/config/api/filmApi';
 import { Film } from '@/config/types/film.type';
-import { filmData } from '@/data/filmData';
 import CloseIcon from '@mui/icons-material/Close';
 import { Button, Fade, IconButton, Modal } from '@mui/material';
 
@@ -20,20 +21,32 @@ const FilmPage = () => {
     setOpen(false);
   };
 
+  const { data, isLoading } = useQuery({
+    queryKey: ['film'],
+    queryFn: async () => {
+      const res = await filmApi.getFilms();
+      return res as unknown as Film[];
+    },
+  });
+
+  console.log(data);
+
   return (
     <>
       <div className="w-full grid grid-cols-3 py-4 gap-8">
-        {filmData.map((film) => {
-          return (
-            <FilmCard
-              key={film.id}
-              {...film}
-              onClick={() => {
-                handleCardClick(film);
-              }}
-            />
-          );
-        })}
+        {isLoading && <>Loading</>}
+        {data &&
+          data.map((film) => {
+            return (
+              <FilmCard
+                key={film.id}
+                {...film}
+                onClick={() => {
+                  handleCardClick(film);
+                }}
+              />
+            );
+          })}
       </div>
       {selectedFilm && (
         <Modal open={open} onClose={handleClose} aria-labelledby="Film Modal" closeAfterTransition>
