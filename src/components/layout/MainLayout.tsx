@@ -1,5 +1,6 @@
 import { Outlet } from 'react-router-dom';
 
+import Footer from './Footer';
 // import Footer from './Footer';
 import Header from './Header';
 
@@ -10,7 +11,7 @@ const MainLayout = () => {
       <div className="flex-1 w-full max-w-7xl mx-auto">
         <Outlet />
       </div>
-      {/* <Footer /> */}
+      <Footer />
     </main>
   );
 };

@@ -5,7 +5,7 @@ import { AuthProvider } from './hooks/useAuth';
 import MainLayout from '@/components/layout/MainLayout';
 import CustomRouter from '@/config/routes/CustomRouter';
 import history from '@/config/routes/history';
-import publicRoutes from '@/config/routes/publicRoutes';
+import routes from '@/config/routes/routes';
 
 function App() {
   const renderRouter = (routes: RouteProps[]) => {
@@ -17,7 +17,7 @@ function App() {
       <AuthProvider>
         <Routes>
           <Route path="/" element={<MainLayout />}>
-            {renderRouter(publicRoutes)}
+            {renderRouter(routes)}
           </Route>
         </Routes>
       </AuthProvider>

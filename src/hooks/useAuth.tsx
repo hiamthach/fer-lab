@@ -1,5 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+import useIsomorphicLayoutEffect from './useIsomorphicLayoutEffect';
 
 import { auth } from '@/config/firebase';
 import authApi from '@/config/firebase/auth';
@@ -36,7 +38,7 @@ function useAuth() {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
         setCurrentUser(user);

@@ -1,4 +1,6 @@
-import { useEffect, useLayoutEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+
+import useIsomorphicLayoutEffect from './useIsomorphicLayoutEffect';
 
 interface IDarkMode {
   darkMode: boolean;
@@ -6,10 +8,10 @@ interface IDarkMode {
 }
 
 function useDarkMode(): IDarkMode {
-  const [darkMode, setDarkMode] = useState<boolean>(true);
+  const [darkMode, setDarkMode] = useState<boolean>(false);
 
   // Load the dark mode preference from localStorage (if available)
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const isDarkModePreferred = localStorage.getItem('darkMode') === 'true';
     setDarkMode(isDarkModePreferred);
   }, []);

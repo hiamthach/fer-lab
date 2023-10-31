@@ -3,7 +3,7 @@ import { RouteProps } from 'react-router-dom';
 import ComingSoon from '@/pages/exception/ComingSoon';
 import NotFound from '@/pages/exception/NotFound';
 import FilmDetailPage from '@/pages/film/FilmDetailPage';
-import FilmPage from '@/pages/film/FilmPage';
+import FilmEditPage from '@/pages/film/FilmEditPage';
 import AboutPage from '@/pages/main/AboutPage';
 import ContactPage from '@/pages/main/ContactPage';
 import HomePage from '@/pages/main/HomePage';
@@ -28,7 +28,7 @@ const publicRoutes: RouteProps[] = [
   },
   {
     path: '/film',
-    element: <FilmPage />,
+    element: <FilmEditPage />,
   },
   {
     path: '/film/:id',
