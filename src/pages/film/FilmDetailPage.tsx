@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 
+import YoutubeViewer from '@/components/shared/YoutubeViewer';
 import filmApi from '@/config/api/filmApi';
 import { Film } from '@/config/types/film.type';
 import NotFound from '@/pages/exception/NotFound';
@@ -66,12 +67,7 @@ const FilmDetailPage = () => {
             <div className="dark:text-white">
               <h4 className="font-semibold text-lg mb-1">Trailer:</h4>
               <div className="w-full aspect-video my-4">
-                <iframe
-                  className="w-full h-full"
-                  src={film.youtubeUrl}
-                  title="YouTube video player"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                ></iframe>
+                <YoutubeViewer url={film.youtubeUrl} />
               </div>
             </div>
           </div>

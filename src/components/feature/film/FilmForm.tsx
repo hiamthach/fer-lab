@@ -1,4 +1,6 @@
+import YoutubeViewer from '@/components/shared/YoutubeViewer';
 import filmApi from '@/config/api/filmApi';
+import stringHelper from '@/config/helpers/string.helper';
 import toastHelper from '@/config/helpers/toast.helper';
 import { Film, FilmFormType, filmFormSchema } from '@/config/types/film.type';
 import { Button, CircularProgress, TextField } from '@mui/material';
@@ -45,7 +47,7 @@ const FilmForm = ({ refetch, handleClose, isEdit, defaultValue }: Props) => {
 
   return (
     <Formik initialValues={initialValues} validationSchema={filmFormSchema} onSubmit={handleSubmit}>
-      {({ isSubmitting }) => (
+      {({ isSubmitting, values }) => (
         <Form className="flex flex-col gap-3">
           <div className="">
             <Field name="title" as={TextField} label="Title" fullWidth variant="outlined" size="small" />
@@ -76,10 +78,16 @@ const FilmForm = ({ refetch, handleClose, isEdit, defaultValue }: Props) => {
             <Field name="image" as={TextField} label="Image" fullWidth variant="outlined" size="small" />
             <ErrorMessage name="image" component="span" className="text-primary italic ml-2 text-xs" />
           </div>
+          {values.image && <img src={values.image} alt="preview image" className="w-full h-auto" />}
           <div className="">
             <Field name="youtubeUrl" as={TextField} label="YouTube URL" fullWidth variant="outlined" size="small" />
             <ErrorMessage name="youtubeUrl" component="span" className="text-primary italic ml-2 text-xs" />
           </div>
+          {values.youtubeUrl && (
+            <>
+              <YoutubeViewer url={stringHelper.convertToEmbedYoutube(values.youtubeUrl)} />
+            </>
+          )}
 
           <Button type="submit" variant="contained" color="primary" disabled={isSubmitting}>
             {isSubmitting ? <CircularProgress size={24} /> : 'Submit'}

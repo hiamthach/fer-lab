@@ -177,7 +177,7 @@ const FilmEditPage = withAuth(() => {
       )}
       <Modal open={isModalOpen} onClose={handleClose} aria-labelledby="Film Modal" closeAfterTransition>
         <Fade in={isModalOpen}>
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-black drop-shadow-lg rounded-2xl p-4">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-black drop-shadow-lg rounded-2xl p-4 max-h-[80vh] overflow-auto">
             <div className="flex justify-between items-center ">
               <h3 className="text-xl font-semibold text-primary">New Film</h3>
               <IconButton aria-label="close" onClick={handleClose}>
