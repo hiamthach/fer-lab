@@ -6,6 +6,7 @@ import MainLayout from '@/components/layout/MainLayout';
 import CustomRouter from '@/config/routes/CustomRouter';
 import history from '@/config/routes/history';
 import routes from '@/config/routes/routes';
+import ThemeProvider from '@/theme/ThemeProvider';
 
 function App() {
   const renderRouter = (routes: RouteProps[]) => {
@@ -13,15 +14,17 @@ function App() {
   };
 
   return (
-    <CustomRouter history={history}>
-      <AuthProvider>
-        <Routes>
-          <Route path="/" element={<MainLayout />}>
-            {renderRouter(routes)}
-          </Route>
-        </Routes>
-      </AuthProvider>
-    </CustomRouter>
+    <ThemeProvider>
+      <CustomRouter history={history}>
+        <AuthProvider>
+          <Routes>
+            <Route path="/" element={<MainLayout />}>
+              {renderRouter(routes)}
+            </Route>
+          </Routes>
+        </AuthProvider>
+      </CustomRouter>
+    </ThemeProvider>
   );
 }
 

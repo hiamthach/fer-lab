@@ -52,20 +52,29 @@ const FilmForm = ({ refetch, handleClose, isEdit, defaultValue }: Props) => {
             <ErrorMessage name="title" component="span" className="text-primary italic ml-2 text-xs" />
           </div>
           <div className="">
-            <Field name="description" as={TextField} label="Description" fullWidth variant="outlined" size="small" />
-            <ErrorMessage name="description" component="span" className="text-primary italic ml-2 text-xs" />
-          </div>
-          <div className="">
-            <Field name="image" as={TextField} label="Image" fullWidth variant="outlined" size="small" />
-            <ErrorMessage name="image" component="span" className="text-primary italic ml-2 text-xs" />
-          </div>
-          <div className="">
             <Field name="year" as={TextField} label="Year" fullWidth variant="outlined" size="small" type="number" />
             <ErrorMessage name="year" component="span" className="text-primary italic ml-2 text-xs" />
           </div>
           <div className="">
             <Field name="nation" as={TextField} label="Nation" fullWidth variant="outlined" size="small" />
             <ErrorMessage name="nation" component="span" className="text-primary italic ml-2 text-xs" />
+          </div>
+          <div className="">
+            <Field
+              name="description"
+              as={TextField}
+              label="Description"
+              fullWidth
+              variant="outlined"
+              size="small"
+              multiline
+              rows={4}
+            />
+            <ErrorMessage name="description" component="span" className="text-primary italic ml-2 text-xs" />
+          </div>
+          <div className="">
+            <Field name="image" as={TextField} label="Image" fullWidth variant="outlined" size="small" />
+            <ErrorMessage name="image" component="span" className="text-primary italic ml-2 text-xs" />
           </div>
           <div className="">
             <Field name="youtubeUrl" as={TextField} label="YouTube URL" fullWidth variant="outlined" size="small" />

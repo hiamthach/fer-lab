@@ -7,17 +7,14 @@ import App from './App.tsx';
 
 import { TOAST_DEFAULT_OPTIONS } from '@/config/helpers/toast.helper.ts';
 import '@/styles/index.css';
-import ThemeProvider from '@/theme/ThemeProvider.tsx';
 
 const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider>
-        <App />
-        <Toaster {...TOAST_DEFAULT_OPTIONS} />
-      </ThemeProvider>
+      <App />
+      <Toaster {...TOAST_DEFAULT_OPTIONS} />
     </QueryClientProvider>
   </React.StrictMode>,
 );

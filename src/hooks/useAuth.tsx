@@ -6,6 +6,7 @@ import useIsomorphicLayoutEffect from './useIsomorphicLayoutEffect';
 import { auth } from '@/config/firebase';
 import authApi from '@/config/firebase/auth';
 import toastHelper from '@/config/helpers/toast.helper';
+import { CircularProgress } from '@mui/material';
 import { User } from 'firebase/auth';
 
 interface IAuthValue {
@@ -88,7 +89,17 @@ function useAuth() {
 export function AuthProvider({ children }: IAuthProvider) {
   const auth: IAuthValue = useAuth();
 
-  return <AuthContext.Provider value={auth}>{!auth.loading ? children : null}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={auth}>
+      {!auth.loading ? (
+        children
+      ) : (
+        <div className="w-full h-screen flex items-center justify-center">
+          <CircularProgress />
+        </div>
+      )}
+    </AuthContext.Provider>
+  );
 }
 
 export default function AuthConsumer() {

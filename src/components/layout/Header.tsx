@@ -1,9 +1,9 @@
 import { Link, useLocation } from 'react-router-dom';
 
 import AuthConsumer from '@/hooks/useAuth';
-import useDarkMode from '@/hooks/useDarkMode';
-import DarkModeIcon from '@mui/icons-material/DarkMode';
-import LightModeIcon from '@mui/icons-material/LightMode';
+// import useDarkMode from '@/hooks/useDarkMode';
+// import DarkModeIcon from '@mui/icons-material/DarkMode';
+// import LightModeIcon from '@mui/icons-material/LightMode';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { Avatar, Button, IconButton } from '@mui/material';
 
@@ -13,11 +13,11 @@ const links = [
     name: 'Home',
     route: '/',
   },
-  {
-    id: 'news',
-    name: 'News',
-    route: '/news',
-  },
+  // {
+  //   id: 'news',
+  //   name: 'News',
+  //   route: '/news',
+  // },
   {
     id: 'about',
     name: 'About',
@@ -31,12 +31,12 @@ const links = [
 ];
 
 const Header = () => {
-  const { darkMode, setDarkMode } = useDarkMode();
+  // const { darkMode, setDarkMode } = useDarkMode();
   const { currentUser, isAuth, signIn, signOut } = AuthConsumer();
 
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-  };
+  // const toggleDarkMode = () => {
+  //   setDarkMode(!darkMode);
+  // };
 
   const { pathname } = useLocation();
 
@@ -56,11 +56,11 @@ const Header = () => {
           })}
         </ul>
         <div className="flex gap-2 items-center">
-          <div className="" onClick={toggleDarkMode}>
+          {/* <div className="" onClick={toggleDarkMode}>
             <IconButton size="small">
               {darkMode ? <LightModeIcon className="text-primary" /> : <DarkModeIcon className="text-primary" />}
             </IconButton>
-          </div>
+          </div> */}
           {isAuth && currentUser ? (
             <>
               <Avatar alt={currentUser.displayName as string} src={currentUser.photoURL as string} />
