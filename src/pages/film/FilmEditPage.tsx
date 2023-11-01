@@ -16,6 +16,11 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import {
   Button,
   CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   Fade,
   IconButton,
   Modal,
@@ -51,6 +56,8 @@ const FilmEditPage = withAuth(() => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedFilm, setSelectedFilm] = useState<Film | null>(null);
+  const [alertDelete, setAlertDelete] = useState(false);
+  const [deleteFilmId, setDeleteFilmId] = useState<string>('');
 
   const { data, isLoading, refetch } = useQuery({
     queryKey: ['films'],
@@ -60,7 +67,7 @@ const FilmEditPage = withAuth(() => {
     },
   });
 
-  const handleChangePage = (event: unknown, newPage: number) => {
+  const handleChangePage = (_event: unknown, newPage: number) => {
     setPage(newPage);
   };
 
@@ -74,10 +81,21 @@ const FilmEditPage = withAuth(() => {
     setSelectedFilm(null);
   };
 
-  const handleDeleteFilm = async (id: string) => {
-    await filmApi.deleteFilm(id);
+  const handleDeleteFilm = async () => {
+    await filmApi.deleteFilm(deleteFilmId);
     toastHelper.success('Film deleted!');
+    handleCloseAlertDelete();
     refetch();
+  };
+
+  const handleOpenAlertDelete = (id: string) => {
+    setAlertDelete(true);
+    setDeleteFilmId(id);
+  };
+
+  const handleCloseAlertDelete = () => {
+    setAlertDelete(false);
+    setDeleteFilmId('');
   };
 
   return (
@@ -141,7 +159,7 @@ const FilmEditPage = withAuth(() => {
                               <IconButton
                                 size="small"
                                 onClick={() => {
-                                  handleDeleteFilm(row.id);
+                                  handleOpenAlertDelete(row.id);
                                 }}
                               >
                                 <DeleteIcon className="text-primary text-sm" />
@@ -196,6 +214,25 @@ const FilmEditPage = withAuth(() => {
           </div>
         </Fade>
       </Modal>
+      <Dialog
+        open={alertDelete && deleteFilmId !== ''}
+        onClose={handleCloseAlertDelete}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{'Delete film'}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Are you sure you want to delete this film?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseAlertDelete}>Disagree</Button>
+          <Button onClick={handleDeleteFilm} autoFocus>
+            Agree
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 });

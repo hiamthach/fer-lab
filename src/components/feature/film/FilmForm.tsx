@@ -84,9 +84,9 @@ const FilmForm = ({ refetch, handleClose, isEdit, defaultValue }: Props) => {
             <ErrorMessage name="youtubeUrl" component="span" className="text-primary italic ml-2 text-xs" />
           </div>
           {values.youtubeUrl && (
-            <>
-              <YoutubeViewer url={stringHelper.convertToEmbedYoutube(values.youtubeUrl)} />
-            </>
+            <div className="w-full aspect-video">
+              <YoutubeViewer url={stringHelper.convertToEmbedYoutube(values.youtubeUrl)} width={500} />
+            </div>
           )}
 
           <Button type="submit" variant="contained" color="primary" disabled={isSubmitting}>

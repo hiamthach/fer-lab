@@ -1,6 +1,4 @@
-import React from 'react';
-
-const YoutubeViewer = ({ url }: { url: string }) => {
+const YoutubeViewer = ({ url }: { url: string; width?: number }) => {
   return (
     <iframe
       className="w-full h-full"
